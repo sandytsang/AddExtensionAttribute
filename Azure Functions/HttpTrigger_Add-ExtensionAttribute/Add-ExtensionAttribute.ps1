@@ -24,7 +24,7 @@ try {
 $body = @'
 {
     "extensionAttributes": {
-        "extensionAttribute1": "Windows10"
+        "extensionAttribute1": "WindowsServer"
     }
 }
 '@
