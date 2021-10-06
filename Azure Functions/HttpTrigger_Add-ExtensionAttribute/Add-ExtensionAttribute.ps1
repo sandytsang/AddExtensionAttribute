@@ -13,11 +13,12 @@ $Global:AuthenticationHeader = @{
     "Authorization" = "Bearer " + $accessToken
     }
 
+# Read application settings for Key Vault values
+$AADGroupObjectId = $env:AADGroupObjectId
 
 try {
     #Get Server group membership
-    $GroupObjectId = "788637d5-2271-43df-9f62-31650ea58f0b" #Change this to your AAD Group ID
-    $Servers = Invoke-MSGraphOperation -Get -Resource "groups/$GroupObjectId/members" -APIVersion Beta
+    $Servers = Invoke-MSGraphOperation -Get -Resource "groups/$AADGroupObjectId/members" -APIVersion Beta
 
     #Add extensionAttribute1
 $body = @'
