@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.613.9944",
-      "templateHash": "4403706452900966434"
+      "templateHash": "5003478244850388567"
     }
   },
   "parameters": {
@@ -28,17 +28,17 @@
         "EP3"
       ]
     },
+    "AzureADGroupID": {
+      "type": "string",
+      "metadata": {
+        "description": "Provide Azure AD group ID"
+      }
+    },
     "Tags": {
       "type": "object",
       "defaultValue": {},
       "metadata": {
         "description": "Provide any tags required by your organization (optional)"
-      }
-    },
-    "AzureADGroupID": {
-      "type": "string",
-      "metadata": {
-        "description": "Provide Azure AD group ID"
       }
     }
   },

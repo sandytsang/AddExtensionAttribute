@@ -9,10 +9,10 @@ param FunctionAppName string
 ])
 @description('Select the desired App Service Plan of the Function App. Select Y1 for free consumption based deployment.')
 param FunctionAppServicePlanSKU string = 'Y1'
-@description('Provide any tags required by your organization (optional)')
-param Tags object = {}
 @description('Provide Azure AD group ID')
 param AzureADGroupID string
+@description('Provide any tags required by your organization (optional)')
+param Tags object = {}
 
 // Define variables
 var UniqueString = uniqueString(resourceGroup().id)
