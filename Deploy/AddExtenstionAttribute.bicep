@@ -11,6 +11,8 @@ param FunctionAppName string
 param FunctionAppServicePlanSKU string = 'Y1'
 @description('Provide any tags required by your organization (optional)')
 param Tags object = {}
+@description('Provide Azure AD group ID')
+param AzureADGroupID string
 
 // Define variables
 var UniqueString = uniqueString(resourceGroup().id)
@@ -80,6 +82,10 @@ resource FunctionApp 'Microsoft.Web/sites@2020-12-01' = {
       powerShellVersion: '~7'
       scmType: 'None'
       appSettings: [
+        {
+          name: 'AADGroupObjectId'
+          value: AzureADGroupID
+        }        
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
           value: reference(FunctionAppInsightsComponents.id, '2020-02-02-preview').InstrumentationKey
