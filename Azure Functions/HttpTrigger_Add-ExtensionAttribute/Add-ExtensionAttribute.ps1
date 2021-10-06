@@ -13,21 +13,24 @@ $Global:AuthenticationHeader = @{
     "Authorization" = "Bearer " + $accessToken
     }
 
-# Read application settings for Key Vault values
+# Read application settings for function app values
 $AADGroupObjectId = $env:AADGroupObjectId
+$ExtensionAttributeID = extensionAttribute + $env:ExtensionAttributeNumber
+$ExtensionAttributeValue = $env:ExtensionAttributeValue
+
 
 try {
     #Get Server group membership
     $Servers = Invoke-MSGraphOperation -Get -Resource "groups/$AADGroupObjectId/members" -APIVersion Beta
 
     #Add extensionAttribute1
-$body = @'
+    $body = @"
 {
     "extensionAttributes": {
-        "extensionAttribute1": "WindowsServer"
+        "$ExtensionAttributeID": "$ExtensionAttributeValue"
     }
 }
-'@
+"@
 
 $OutPut = @()
     foreach ($Server in $Servers) {

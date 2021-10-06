@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.613.9944",
-      "templateHash": "5003478244850388567"
+      "templateHash": "3281013042797100054"
     }
   },
   "parameters": {
@@ -33,6 +33,35 @@
       "metadata": {
         "description": "Provide Azure AD group ID"
       }
+    },
+    "ExtensionAttributeNumber": {
+      "type": "string",
+      "metadata": {
+        "description": "Select the disired Extension Attribute"
+      }
+    },
+    "ExtensionAttributeValue": {
+      "type": "string",
+      "metadata": {
+        "description": "Provide disired Extension Attribute value"
+      },
+      "allowedValues": [
+        "extensionAttribute1",
+        "extensionAttribute2",
+        "extensionAttribute3",
+        "extensionAttribute4",
+        "extensionAttribute5",
+        "extensionAttribute6",
+        "extensionAttribute7",
+        "extensionAttribute8",
+        "extensionAttribute9",
+        "extensionAttribute10",
+        "extensionAttribute11",
+        "extensionAttribute12",
+        "extensionAttribute13",
+        "extensionAttribute14",
+        "extensionAttribute15"
+      ]
     },
     "Tags": {
       "type": "object",
@@ -114,6 +143,14 @@
             {
               "name": "AADGroupObjectId",
               "value": "[parameters('AzureADGroupID')]"
+            },
+            {
+              "name": "ExtensionAttributeNumber",
+              "value": "[parameters('ExtensionAttributeNumber')]"
+            },
+            {
+              "name": "ExtensionAttributeValue",
+              "value": "[parameters('ExtensionAttributeValue')]"
             },
             {
               "name": "APPINSIGHTS_INSTRUMENTATIONKEY",

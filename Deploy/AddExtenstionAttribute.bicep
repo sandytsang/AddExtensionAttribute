@@ -11,6 +11,27 @@ param FunctionAppName string
 param FunctionAppServicePlanSKU string = 'Y1'
 @description('Provide Azure AD group ID')
 param AzureADGroupID string
+@description('Select the disired Extension Attribute')
+param ExtensionAttributeNumber string
+@allowed([
+  'extensionAttribute1'
+  'extensionAttribute2'
+  'extensionAttribute3'
+  'extensionAttribute4'
+  'extensionAttribute5'
+  'extensionAttribute6'
+  'extensionAttribute7'
+  'extensionAttribute8'
+  'extensionAttribute9'
+  'extensionAttribute10'
+  'extensionAttribute11'
+  'extensionAttribute12'
+  'extensionAttribute13'
+  'extensionAttribute14'
+  'extensionAttribute15'
+])
+@description('Provide disired Extension Attribute value')
+param ExtensionAttributeValue string
 @description('Provide any tags required by your organization (optional)')
 param Tags object = {}
 
@@ -85,7 +106,15 @@ resource FunctionApp 'Microsoft.Web/sites@2020-12-01' = {
         {
           name: 'AADGroupObjectId'
           value: AzureADGroupID
-        }        
+        }
+        {
+          name: 'ExtensionAttributeNumber'
+          value: ExtensionAttributeNumber
+        }
+        {
+          name: 'ExtensionAttributeValue'
+          value: ExtensionAttributeValue
+        }                          
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
           value: reference(FunctionAppInsightsComponents.id, '2020-02-02-preview').InstrumentationKey
