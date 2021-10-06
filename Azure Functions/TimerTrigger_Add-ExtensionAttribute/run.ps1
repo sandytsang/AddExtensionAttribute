@@ -16,40 +16,43 @@ $Global:AuthenticationHeader = @{
 
 # Read application settings for function app values
 $AADGroupObjectId = $env:AADGroupObjectId
-$ExtensionAttributeID = $env:ExtensionAttributeNumber
+$ExtensionAttributeNumber = $env:ExtensionAttributeNumber
 $ExtensionAttributeValue = $env:ExtensionAttributeValue
+$extensionAttributes = $ExtensionAttributeNumber + '=' + $ExtensionAttributeValue + ";"
 
 
 try {
     #Get Server group membership
-    $Servers = Invoke-MSGraphOperation -Get -Resource "groups/$AADGroupObjectId/members" -APIVersion Beta
+    $Servers = Invoke-MSGraphOperation -Get -Resource "groups/$AADGroupObjectId/members" -APIVersion Beta  | Where-Object { $_.extensionAttributes -notmatch "$extensionAttributes" }
 
     #Add extensionAttribute1
     $body = @"
 {
     "extensionAttributes": {
-        "$ExtensionAttributeID": "$ExtensionAttributeValue"
+        "$ExtensionAttributeNumber": "$ExtensionAttributeValue"
     }
 }
 "@
 
-    foreach ($Server in $Servers) {
-        try {
-            $DeviceId = $Server.id
-            $ServerName = $Server.displayName
-            $GraphResponse = Invoke-MSGraphOperation -Patch -Resource "devices/$DeviceId" -APIVersion Beta -Body $body
-            $Output = "ExtensionAtribute is added to $ServerName"
-            write-output $Output
-        }
-        catch [System.Exception]{
-            $Output = "Add ExtensionAtribute on $ServerName failed. Error: $($_.Exception.Message)"
-            write-output $Output
+    if ($Servers) {
+        foreach ($Server in $Servers) {
+            try {
+                $DeviceId = $Server.id
+                $ServerName = $Server.displayName
+                $GraphResponse = Invoke-MSGraphOperation -Patch -Resource "devices/$DeviceId" -APIVersion Beta -Body $body
+                $Output = "ExtensionAtribute is added to $ServerName"
+                write-output $Output
+            }
+            catch [System.Exception]{
+                $Output = "Add ExtensionAtribute on $ServerName failed. Error: $($_.Exception.Message)"
+                write-output $Output
+            }
         }
     }
+    else {
+        $OutPut = "No changes on servers' extension attributes"
+    }   
 }
 catch [System.Exception]{
     write-output "$($_.Exception.Message)"
 }
-
-
-
