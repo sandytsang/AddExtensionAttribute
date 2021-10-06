@@ -13,6 +13,7 @@ param FunctionAppServicePlanSKU string = 'Y1'
 
 @description('Provide Azure AD group ID')
 param AzureADGroupID string
+
 @description('Select the disired Extension Attribute')
 @allowed([
   'extensionAttribute1'
