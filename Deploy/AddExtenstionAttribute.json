@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.613.9944",
-      "templateHash": "3281013042797100054"
+      "templateHash": "16521139199966681111"
     }
   },
   "parameters": {
@@ -18,15 +18,15 @@
     "FunctionAppServicePlanSKU": {
       "type": "string",
       "defaultValue": "Y1",
-      "metadata": {
-        "description": "Select the desired App Service Plan of the Function App. Select Y1 for free consumption based deployment."
-      },
       "allowedValues": [
         "Y1",
         "EP1",
         "EP2",
         "EP3"
-      ]
+      ],
+      "metadata": {
+        "description": "Select the desired App Service Plan of the Function App. Select Y1 for free consumption based deployment."
+      }
     },
     "AzureADGroupID": {
       "type": "string",
@@ -36,15 +36,6 @@
     },
     "ExtensionAttributeNumber": {
       "type": "string",
-      "metadata": {
-        "description": "Select the disired Extension Attribute"
-      }
-    },
-    "ExtensionAttributeValue": {
-      "type": "string",
-      "metadata": {
-        "description": "Provide disired Extension Attribute value"
-      },
       "allowedValues": [
         "extensionAttribute1",
         "extensionAttribute2",
@@ -61,7 +52,16 @@
         "extensionAttribute13",
         "extensionAttribute14",
         "extensionAttribute15"
-      ]
+      ],
+      "metadata": {
+        "description": "Select the disired Extension Attribute"
+      }
+    },
+    "ExtensionAttributeValue": {
+      "type": "string",
+      "metadata": {
+        "description": "Provide disired Extension Attribute value"
+      }
     },
     "Tags": {
       "type": "object",

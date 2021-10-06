@@ -1,18 +1,19 @@
 // Define parameters
 @description('Provide a name for the Function App that consists of alphanumerics. Name must be globally unique in Azure and cannot start or end with a hyphen.')
 param FunctionAppName string
+
+@description('Select the desired App Service Plan of the Function App. Select Y1 for free consumption based deployment.')
 @allowed([
   'Y1'
   'EP1'
   'EP2'
   'EP3'
 ])
-@description('Select the desired App Service Plan of the Function App. Select Y1 for free consumption based deployment.')
 param FunctionAppServicePlanSKU string = 'Y1'
+
 @description('Provide Azure AD group ID')
 param AzureADGroupID string
 @description('Select the disired Extension Attribute')
-param ExtensionAttributeNumber string
 @allowed([
   'extensionAttribute1'
   'extensionAttribute2'
@@ -30,8 +31,11 @@ param ExtensionAttributeNumber string
   'extensionAttribute14'
   'extensionAttribute15'
 ])
+param ExtensionAttributeNumber string
+
 @description('Provide disired Extension Attribute value')
 param ExtensionAttributeValue string
+
 @description('Provide any tags required by your organization (optional)')
 param Tags object = {}
 
