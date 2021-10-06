@@ -40,7 +40,7 @@ try {
                 $DeviceId = $Server.id
                 $ServerName = $Server.displayName
                 $GraphResponse = Invoke-MSGraphOperation -Patch -Resource "devices/$DeviceId" -APIVersion Beta -Body $body
-                $OutputResponse = "ExtensionAtribute is added to $ServerName"
+                $OutputResponse = "ExtensionAtribute $extensionAttributes is added to $ServerName"
             }
             catch [System.Exception] {
                 $OutputResponse = "Add ExtensionAtribute on $ServerName failed. Error: $($_.Exception.Message)"
