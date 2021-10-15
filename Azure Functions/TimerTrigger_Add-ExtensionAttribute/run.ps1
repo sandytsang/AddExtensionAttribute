@@ -15,18 +15,18 @@ $Global:AuthenticationHeader = @{
     }
 
 # Read application settings for function app values
-$AADGroupObjectId = $env:AADGroupObjectId
+$AADGroupObjectIds = ($env:AADGroupObjectIds).split(";").trim()
 $ExtensionAttributeNumber = $env:ExtensionAttributeNumber
 $ExtensionAttributeValue = $env:ExtensionAttributeValue
 $extensionAttributes = $ExtensionAttributeNumber + '=' + $ExtensionAttributeValue + ";"
 
+foreach ($AADGroupObjectId in $AADGroupObjectIds) {
+    try {
+        #Get Server group membership
+        $Servers = Invoke-MSGraphOperation -Get -Resource "groups/$AADGroupObjectId/members" -APIVersion Beta  | Where-Object { $_.extensionAttributes -notmatch "$extensionAttributes" }
 
-try {
-    #Get Server group membership
-    $Servers = Invoke-MSGraphOperation -Get -Resource "groups/$AADGroupObjectId/members" -APIVersion Beta  | Where-Object { $_.extensionAttributes -notmatch "$extensionAttributes" }
-
-    #Add extensionAttribute1
-    $body = @"
+        #Add extensionAttribute1
+        $body = @"
 {
     "extensionAttributes": {
         "$ExtensionAttributeNumber": "$ExtensionAttributeValue"
@@ -34,26 +34,27 @@ try {
 }
 "@
 
-    if ($Servers) {
-        foreach ($Server in $Servers) {
-            try {
-                $DeviceId = $Server.id
-                $ServerName = $Server.displayName
-                $GraphResponse = Invoke-MSGraphOperation -Patch -Resource "devices/$DeviceId" -APIVersion Beta -Body $body
-                $Output = "ExtensionAtribute $extensionAttributes is added to $ServerName"
-                write-output $Output
-            }
-            catch [System.Exception]{
-                $Output = "Add ExtensionAtribute on $ServerName failed. Error: $($_.Exception.Message)"
-                write-output $Output
+        if ($Servers) {
+            foreach ($Server in $Servers) {
+                try {
+                    $DeviceId = $Server.id
+                    $ServerName = $Server.displayName
+                    $GraphResponse = Invoke-MSGraphOperation -Patch -Resource "devices/$DeviceId" -APIVersion Beta -Body $body
+                    $Output = "ExtensionAtribute $extensionAttributes is added to $ServerName"
+                    write-output $Output
+                }
+                catch [System.Exception]{
+                    $Output = "Add ExtensionAtribute on $ServerName failed. Error: $($_.Exception.Message)"
+                    write-output $Output
+                }
             }
         }
+        else {
+            $OutPut = "No changes on servers' extension attributes"
+            Write-Output $Output
+        }   
     }
-    else {
-        $OutPut = "No changes on servers' extension attributes"
-        Write-Output $Output
-    }   
-}
-catch [System.Exception]{
-    write-output "$($_.Exception.Message)"
+    catch [System.Exception]{
+        write-output "$($_.Exception.Message)"
+    }
 }
