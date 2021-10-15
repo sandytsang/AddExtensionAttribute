@@ -15,7 +15,7 @@ $Global:AuthenticationHeader = @{
     }
 
 # Read application settings for function app values
-$AADGroupObjectIds = ($env:AADGroupObjectIds).split(";").trim()
+$AADGroupObjectIds = ($env:AADGroupObjectId).split(";").trim()
 $ExtensionAttributeNumber = $env:ExtensionAttributeNumber
 $ExtensionAttributeValue = $env:ExtensionAttributeValue
 $extensionAttributes = $ExtensionAttributeNumber + '=' + $ExtensionAttributeValue + ";"
