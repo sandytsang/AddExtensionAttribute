@@ -37,17 +37,20 @@ param ExtensionAttributeNumber string
 @description('Provide disired Extension Attribute value')
 param ExtensionAttributeValue string
 
-@description('Provide any tags required by your organization (optional)')
+@description('Provide any tags required by your organization, example {"FirstTag": "FirstValue", "SecondTag": "SecondValue"} (optional)')
 param Tags object = {}
 
 // Define variables
 var UniqueString = uniqueString(resourceGroup().id)
 var FunctionAppNameNoDash = replace(FunctionAppName, '-', '')
 var FunctionAppNameNoDashUnderScore = replace(FunctionAppNameNoDash, '_', '')
-var StorageAccountName = toLower('${take(FunctionAppNameNoDashUnderScore, 17)}${take(UniqueString, 5)}sa')
+var StorageAccountNameReplace = replace(replace(FunctionAppNameNoDashUnderScore, 'function', 'stor'), 'intune','')
+var StorageAccountName = toLower('${take(StorageAccountNameReplace, 22)}')
+var FunctionAppInsightsName = replace(FunctionAppName, 'function', 'appinsights')
+var FunctionAppServicePlanName = replace(FunctionAppName, 'function', 'appsvcpln')
 var Website_ContenshareName = toLower('${take(FunctionAppNameNoDashUnderScore, 17)}${take(UniqueString, 5)}sa')
-var FunctionAppServicePlanName = '${FunctionAppName}-fa-plan'
-var FunctionAppInsightsName = '${FunctionAppName}-fa-ai'
+
+
 
 // Create storage account for Function App
 resource storageaccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {

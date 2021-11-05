@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.613.9944",
-      "templateHash": "16521139199966681111"
+      "templateHash": "1653835077254372492"
     }
   },
   "parameters": {
@@ -67,7 +67,7 @@
       "type": "object",
       "defaultValue": {},
       "metadata": {
-        "description": "Provide any tags required by your organization (optional)"
+        "description": "Provide any tags required by your organization, example {\"FirstTag\": \"FirstValue\", \"SecondTag\": \"SecondValue\"} (optional)"
       }
     }
   },
@@ -76,10 +76,11 @@
     "UniqueString": "[uniqueString(resourceGroup().id)]",
     "FunctionAppNameNoDash": "[replace(parameters('FunctionAppName'), '-', '')]",
     "FunctionAppNameNoDashUnderScore": "[replace(variables('FunctionAppNameNoDash'), '_', '')]",
-    "StorageAccountName": "[toLower(format('{0}{1}sa', take(variables('FunctionAppNameNoDashUnderScore'), 17), take(variables('UniqueString'), 5)))]",
-    "Website_ContenshareName": "[toLower(format('{0}{1}sa', take(variables('FunctionAppNameNoDashUnderScore'), 17), take(variables('UniqueString'), 5)))]",
-    "FunctionAppServicePlanName": "[format('{0}-fa-plan', parameters('FunctionAppName'))]",
-    "FunctionAppInsightsName": "[format('{0}-fa-ai', parameters('FunctionAppName'))]"
+    "StorageAccountNameReplace": "[replace(replace(variables('FunctionAppNameNoDashUnderScore'), 'function', 'stor'), 'intune', '')]",
+    "StorageAccountName": "[toLower(take(variables('StorageAccountNameReplace'), 22))]",
+    "FunctionAppInsightsName": "[replace(parameters('FunctionAppName'), 'function', 'appinsights')]",
+    "FunctionAppServicePlanName": "[replace(parameters('FunctionAppName'), 'function', 'appsvcpln')]",
+    "Website_ContenshareName": "[toLower(format('{0}{1}sa', take(variables('FunctionAppNameNoDashUnderScore'), 17), take(variables('UniqueString'), 5)))]"
   },
   "resources": [
     {
