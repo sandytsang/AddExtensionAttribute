@@ -12,7 +12,7 @@
     "FunctionAppName": {
       "type": "string",
       "metadata": {
-        "description": "Provide the name of the existing Function App that was given when CloudLAPS was initially deployed."
+        "description": "Provide the name of the existing Function App that was given when Add Extension Attribute was initially deployed."
       }
     }
   },
