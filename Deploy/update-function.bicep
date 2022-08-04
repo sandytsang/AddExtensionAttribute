@@ -1,5 +1,5 @@
 // Define parameters
-@description('Provide the name of the existing Function App that was given when CloudLAPS was initially deployed.')
+@description('Provide the name of the existing Function App that was given when Add Extension Attribute was initially deployed.')
 param FunctionAppName string
 
 resource FunctionApp 'Microsoft.Web/sites@2020-12-01' existing = { 
